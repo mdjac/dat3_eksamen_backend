@@ -26,15 +26,14 @@ import javax.annotation.security.RolesAllowed;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.TypedQuery;
-import javax.ws.rs.core.Context;
-import javax.ws.rs.core.UriInfo;
+import javax.ws.rs.core.*;
 import javax.ws.rs.Produces;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.container.AsyncResponse;
 import javax.ws.rs.container.Suspended;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.SecurityContext;
+
+import errorhandling.API_Exception;
 import utils.EMF_Creator;
 import utils.Utility;
 import utils.api.MakeOptions;
@@ -73,11 +72,30 @@ public class DemoResource {
             em.close();
         }
     }
+
+
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    @Path("test")
+    @RolesAllowed({"user","admin"})
+    public Response testErrorEndPoint() throws API_Exception {
+        List<String> strings = new ArrayList<>();
+        try{
+            for (int i = 0; i < 10; i++){
+                System.out.println(strings.get(i));
+            }
+        } catch (Exception e){
+            throw new API_Exception("FEJL SOM MENINGEN");
+        }
+        return Response.ok().entity("{\"msg\": \"Hello to User: " + "test" + "\"}").build();
+    }
     
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Path("threads")
-    public void getFromThreads(@Suspended final AsyncResponse ar) {
+    @RolesAllowed({"user","admin"})
+    public void getFromThreads(@Suspended final AsyncResponse ar) throws API_Exception {
+
         //Make options to get possibility to switch between methods and headers if needed.
         MakeOptions makeOptions = new MakeOptions("GET");
         
@@ -98,7 +116,6 @@ public class DemoResource {
                 Future<String> future = executor.submit(new ApiFetchCallable(url.getKey(), url.getValue()));
                 futures.add(future);
               }
-              
                 //Get the results
                 for (Future<String> future : futures) {
                     String str = future.get();
@@ -118,6 +135,7 @@ public class DemoResource {
             CombinedApiDTO combinedApiDTO = new CombinedApiDTO(weatherDTOArray[0],currencyApiDTO);
             
             //Returns data in json
+
             ar.resume(gson.toJson(combinedApiDTO));
         }).start();
     }
