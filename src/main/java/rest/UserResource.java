@@ -18,6 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.annotation.security.RolesAllowed;
 import javax.persistence.EntityManagerFactory;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.UriInfo;
@@ -55,6 +56,7 @@ public class UserResource {
     @POST
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
+    @RolesAllowed("admin")
     public Response createUser(String jsonString) throws API_Exception, Exception {
         UserDTO userDTO = gson.fromJson(jsonString, UserDTO.class);
         UserDTO newUserDTO = USER_FACADE.createUser(userDTO);

@@ -10,6 +10,8 @@ import dtos.CombinedApiDTO;
 import dtos.WeatherDTO;
 import dtos.CurrencyApiDTO;
 import entities.User;
+
+import java.sql.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -35,6 +37,7 @@ import javax.ws.rs.container.Suspended;
 
 import errorhandling.API_Exception;
 import utils.EMF_Creator;
+import utils.SetupTestUsers;
 import utils.Utility;
 import utils.api.MakeOptions;
 
@@ -158,5 +161,14 @@ public class DemoResource {
     public String getFromAdmin() {
         String thisuser = securityContext.getUserPrincipal().getName();
         return "{\"msg\": \"Hello to (admin) User: " + thisuser + "\"}";
+    }
+
+    @GET
+    @Path("reset")
+    public String resetDataSet() {
+        SetupTestUsers setup = new SetupTestUsers();
+        String[] arguments = new String[] {""};
+        setup.main(arguments);
+        return "Reset";
     }
 }

@@ -1,5 +1,7 @@
 package rest;
 
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
 import entities.User;
 import entities.Role;
 
@@ -225,11 +227,20 @@ public class LoginEndpointTest {
     
     @Test
     public void testCreateUser() {
-        String username = "new_test_user";
-        String json = String.format("{\"username\": \"%s\", \"password\": \"%s\", \"roles\": [{\"rolename\":\"%s\"}]}", username, "pas123", "user");
+        String username = "new_user_test";
+        login("admin", "test");
+        JsonObject inputJson = new JsonObject();
+        inputJson.addProperty("username", username);
+        inputJson.addProperty("password", "testUser");
+        JsonArray jsonArray = new JsonArray();
+        JsonObject roleObject = new JsonObject();
+        roleObject.addProperty("rolename", "user");
+        jsonArray.add(roleObject);
+        inputJson.add("roles", jsonArray);
         given()
                 .contentType("application/json")
-                .body(json)
+                .header("x-access-token", securityToken)
+                .body(inputJson)
                 .when().post("/user")
                 .then()
                 .body("username", equalTo(username));
@@ -238,14 +249,22 @@ public class LoginEndpointTest {
     @Test
     public void testCreateUserWithExistingUsername() {
         String username = "user";
-        String json = String.format("{\"username\": \"%s\", \"password\": \"%s\", \"roles\": [{\"rolename\":\"%s\"}]}", username, "pas123", "user");
+        login("admin", "test");
+        JsonObject inputJson = new JsonObject();
+        inputJson.addProperty("username", username);
+        inputJson.addProperty("password", "testUser");
+        JsonArray jsonArray = new JsonArray();
+        JsonObject roleObject = new JsonObject();
+        roleObject.addProperty("rolename", "user");
+        jsonArray.add(roleObject);
+        inputJson.add("roles", jsonArray);
         given()
                 .contentType("application/json")
-                .body(json)
+                .header("x-access-token", securityToken)
+                .body(inputJson)
                 .when().post("/user")
                 .then()
                 .body("message", equalTo("Username already exists"));
-        //Assertions.assertEquals("Username already exists", result);
     }
 
 }
