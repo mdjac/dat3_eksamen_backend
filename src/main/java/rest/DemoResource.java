@@ -3,22 +3,15 @@ package rest;
 import callables.ApiFetchCallable;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonParser;
-import dtos.CombinedApiDTO;
-import dtos.WeatherDTO;
-import dtos.CurrencyApiDTO;
+import dtos.demo.CombinedApiDTO;
+import dtos.demo.WeatherDTO;
+import dtos.demo.CurrencyApiDTO;
 import entities.User;
 
-import java.sql.Array;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.TreeMap;
-import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
@@ -37,8 +30,7 @@ import javax.ws.rs.container.Suspended;
 
 import errorhandling.API_Exception;
 import utils.EMF_Creator;
-import utils.SetupTestUsers;
-import utils.Utility;
+import utils.StartDataSet;
 import utils.api.MakeOptions;
 
 /**
@@ -166,7 +158,7 @@ public class DemoResource {
     @GET
     @Path("reset")
     public String resetDataSet() {
-        SetupTestUsers setup = new SetupTestUsers();
+        StartDataSet setup = new StartDataSet();
         String[] arguments = new String[] {""};
         setup.main(arguments);
         return "Reset";

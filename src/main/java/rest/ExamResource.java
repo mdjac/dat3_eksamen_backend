@@ -45,7 +45,7 @@ public class ExamResource {
     @GET
     @Produces({MediaType.APPLICATION_JSON})
     @RolesAllowed({"user","admin"})
-    @Path("/verify")
+    @Path("verify")
     public Response VerifyConnection() throws IOException, API_Exception {
         //get username from token
         String username = securityContext.getUserPrincipal().getName();
