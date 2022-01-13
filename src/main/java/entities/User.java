@@ -30,6 +30,11 @@ public class User implements Serializable {
   @ManyToMany
   private List<Role> roleList = new ArrayList<>();
 
+
+  @ManyToMany(mappedBy = "users")
+  private List<Trip> trips = new ArrayList<>();
+
+
   public List<String> getRolesAsStrings() {
     if (roleList.isEmpty()) {
       return null;
@@ -81,4 +86,14 @@ public class User implements Serializable {
     roleList.add(userRole);
   }
 
+
+  public List<Trip> getTrips() {
+    return trips;
+  }
+  public void addTrip(Trip trip) {
+      this.trips.add(trip);
+      if(!trip.getUsers().contains(this)){
+        trip.addUser(this);
+      }
+    }
 }
