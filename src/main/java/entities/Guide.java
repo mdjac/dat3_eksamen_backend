@@ -26,9 +26,6 @@ public class Guide implements Serializable {
     @Column(name = "birth_year")
     private int birthYear;
 
-    @Column(name = "profile")
-    private String profile;
-
     @Column(name = "image_url")
     private String image;
 
@@ -38,11 +35,10 @@ public class Guide implements Serializable {
     public Guide() {
     }
 
-    public Guide(String name, String gender, int birthYear, String profile, String image) {
+    public Guide(String name, String gender, int birthYear, String image) {
         this.name = name;
         this.gender = gender;
         this.birthYear = birthYear;
-        this.profile = profile;
         this.image = image;
     }
 
@@ -94,14 +90,6 @@ public class Guide implements Serializable {
 
     public void setBirthYear(int birthYear) {
         this.birthYear = birthYear;
-    }
-
-    public String getProfile() {
-        return profile;
-    }
-
-    public void setProfile(String profile) {
-        this.profile = profile;
     }
 
     public String getImage() {

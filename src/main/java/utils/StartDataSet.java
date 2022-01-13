@@ -77,9 +77,9 @@ public class StartDataSet {
             pI6 = new PackingItem("Name6");
             pI7 = new PackingItem("Name7");
 
-            guide1 = new Guide("guide 1","male",1,"profile","https://i.stack.imgur.com/l60Hf.png");
-            guide2 = new Guide("guide 2","male",2,"profile","https://i.stack.imgur.com/l60Hf.png");
-            guide3 = new Guide("guide 3","male",3,"profile","https://i.stack.imgur.com/l60Hf.png");
+            guide1 = new Guide("guide 1","male",1,"https://i.stack.imgur.com/l60Hf.png");
+            guide2 = new Guide("guide 2","male",2,"https://i.stack.imgur.com/l60Hf.png");
+            guide3 = new Guide("guide 3","male",3,"https://i.stack.imgur.com/l60Hf.png");
 
             user.addRole(userRole);
             admin.addRole(adminRole);
