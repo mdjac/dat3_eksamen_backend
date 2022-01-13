@@ -4,6 +4,8 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
 
+import dtos.TripDTO;
+import entities.Trip;
 import errorhandling.API_Exception;
 
 import java.io.IOException;
@@ -55,4 +57,16 @@ public class ExamResource {
         jsonObject.addProperty("number",number);
         return Response.ok().entity(gson.toJson(jsonObject)).build();
     }
+
+    @GET
+    @Produces({MediaType.APPLICATION_JSON})
+    @RolesAllowed({"user","admin"})
+    @Path("trips")
+    public Response getAllTrips() throws IOException, API_Exception {
+        List<Trip> inputTrips = facade.getAllTrips();
+        List<TripDTO> trips = TripDTO.getTripDTOs(inputTrips);
+        return Response.ok().entity(gson.toJson(trips)).build();
+    }
+
+
 }

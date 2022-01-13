@@ -5,7 +5,9 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import dtos.user.UserDTO;
+import entities.Trip;
 import entities.User;
+import groovyjarjarantlr4.v4.runtime.atn.StarLoopEntryState;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
@@ -16,6 +18,8 @@ import utils.StartDataSet;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 
+
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -84,6 +88,12 @@ public class FacadeTest {
         EntityManager em = emf.createEntityManager();
         User user = em.find(User.class, username);
         Assertions.assertNotNull(user);
+    }
+
+    @Test
+    public void testGetAllTrips() throws Exception {
+        List<Trip> fetchedTrips = facade.getAllTrips();
+        assertEquals(fetchedTrips.size(),StartDataSet.trips.size());
     }
 
 

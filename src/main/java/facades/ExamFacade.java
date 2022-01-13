@@ -5,6 +5,7 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import entities.Trip;
 import entities.User;
 import errorhandling.API_Exception;
 import java.io.IOException;
@@ -54,5 +55,20 @@ public class ExamFacade {
         } finally {
             em.close();
         }
+    }
+
+    public List<Trip> getAllTrips() throws API_Exception {
+        List<Trip> trips;
+        EntityManager em = emf.createEntityManager();
+        try{
+            TypedQuery<Trip> query = em.createQuery("SELECT t from Trip t", Trip.class);
+            trips = query.getResultList();
+            return trips;
+        } catch (Exception e){
+            throw new API_Exception("Error while fetching trips!");
+        } finally{
+            em.close();
+        }
+
     }
 }

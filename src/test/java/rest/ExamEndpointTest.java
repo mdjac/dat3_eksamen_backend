@@ -4,7 +4,9 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
+import dtos.TripDTO;
 import entities.Role;
+import entities.Trip;
 import entities.User;
 import facades.ExamFacade;
 import io.restassured.RestAssured;
@@ -108,8 +110,38 @@ public class ExamEndpointTest {
                 .when().get("/exam/verify")
                 .then()
                 .statusCode(200)
-                .body("number", equalTo(3));
+                .body("number", equalTo(StartDataSet.users.size()));
     }
+
+    @Test
+    public void testGetTrips_tripContainsSpecific() {
+        login(StartDataSet.user.getUserName(), "testUser");
+        List<TripDTO> trips = given()
+                .contentType("application/json")
+                .header("x-access-token", securityToken)
+                .when().get("/exam/trips")
+                .then()
+                .statusCode(200)
+                .extract().body().jsonPath().getList("$", TripDTO.class);
+        assertThat(trips, hasItems(
+                new TripDTO(StartDataSet.trip1),
+                new TripDTO(StartDataSet.trip2)
+        ));
+    }
+
+    @Test
+    public void testGetTrips_tripsHasSize() {
+        login(StartDataSet.user.getUserName(), "testUser");
+        given()
+                .contentType("application/json")
+                .header("x-access-token", securityToken)
+                .when().get("/exam/trips")
+                .then()
+                .statusCode(200)
+                .body("$", hasSize(StartDataSet.trips.size()));
+    }
+
+
 
 
 }
