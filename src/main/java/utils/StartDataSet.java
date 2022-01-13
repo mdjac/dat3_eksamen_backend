@@ -96,10 +96,10 @@ public class StartDataSet {
             trip1.addPackingItemList(pI7);
 
             user.addTrip(trip1);
-            //user.addTrip(trip2);
-            trip2.addUser(user);
+            user.addTrip(trip2);
             admin.addTrip(trip3);
-            trip4.addUser(both);
+            both.addTrip(trip4);
+            admin.addTrip(trip1);
 
             guide1.addTrip(trip1);
             guide2.addTrip(trip2);
