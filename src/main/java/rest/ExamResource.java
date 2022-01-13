@@ -6,8 +6,10 @@ import com.google.gson.JsonObject;
 
 import com.google.gson.JsonParser;
 import dtos.AddTripDTO;
+import dtos.GuideDTO;
 import dtos.TripDTO;
 import dtos.user.UserDTO;
+import entities.Guide;
 import entities.Trip;
 import errorhandling.API_Exception;
 
@@ -116,5 +118,20 @@ public class ExamResource {
         Trip trip = facade.addTrip(addTripDTO);
         TripDTO tripDTO = new TripDTO(trip);
         return Response.ok().entity(gson.toJson(tripDTO)).build();
+    }
+
+    @POST
+    @Consumes({MediaType.APPLICATION_JSON})
+    @Produces({MediaType.APPLICATION_JSON})
+    @Path("newguide")
+    @RolesAllowed("admin")
+    public Response addGuide(String jsonString) throws Exception {
+        GuideDTO guideDTO = gson.fromJson(jsonString, GuideDTO.class);
+        if(guideDTO.getImage().isEmpty()){
+            guideDTO.setImage("https://i.stack.imgur.com/l60Hf.png");
+        }
+        Guide outputGuide = facade.addGuide(guideDTO);
+        guideDTO = new GuideDTO(outputGuide);
+        return Response.ok().entity(gson.toJson(guideDTO)).build();
     }
 }

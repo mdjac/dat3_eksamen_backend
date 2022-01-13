@@ -6,7 +6,9 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import dtos.AddTripDTO;
+import dtos.GuideDTO;
 import dtos.TripDTO;
+import entities.Guide;
 import entities.PackingItem;
 import entities.Trip;
 import entities.User;
@@ -131,6 +133,21 @@ public class ExamFacade {
             em.persist(trip);
             em.getTransaction().commit();
             return trip;
+        } catch(Exception e){
+            throw new API_Exception(e.getMessage());
+        } finally {
+            em.close();
+        }
+    }
+
+    public Guide addGuide(GuideDTO inputDTO) throws Exception {
+        EntityManager em = emf.createEntityManager();
+        Guide guide = inputDTO.getEntity();
+        try {
+            em.getTransaction().begin();
+            em.persist(guide);
+            em.getTransaction().commit();
+            return guide;
         } catch(Exception e){
             throw new API_Exception(e.getMessage());
         } finally {

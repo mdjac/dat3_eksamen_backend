@@ -3,7 +3,7 @@ package dtos;
 import entities.Guide;
 
 public class GuideDTO {
-    private int id;
+    private Integer id;
     private String name;
     private String gender;
     private int birthYear;
@@ -17,5 +17,21 @@ public class GuideDTO {
         this.gender = guide.getGender();
         this.birthYear = guide.getBirthYear();
         this.image = guide.getImage();
+    }
+
+    public Guide getEntity(){
+        Guide guide = new Guide(this.name,this.gender,this.birthYear,this.image);
+        if(this.id != null){
+            guide.setId(this.id);
+        }
+        return guide;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
     }
 }

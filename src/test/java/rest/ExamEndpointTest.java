@@ -235,6 +235,58 @@ public class ExamEndpointTest {
                 .body("id", greaterThan(0));
     }
 
+    @Test
+    public void testCreateNewGuide_CheckForID() {
+        JsonObject inputJson = new JsonObject();
+        inputJson.addProperty("name", "new_guideName");
+        inputJson.addProperty("gender", "new_guideGender");
+        inputJson.addProperty("birthYear", "2010");
+        inputJson.addProperty("image", "");
+        login(StartDataSet.admin.getUserName(),"testAdmin");
+        given()
+                .contentType("application/json")
+                .header("x-access-token", securityToken)
+                .body(inputJson.toString())
+                .when().post("/exam/newguide")
+                .then()
+                .body("id", greaterThan(0));
+    }
+
+    @Test
+    public void testCreateNewGuide_CheckForDefaultImg() {
+        JsonObject inputJson = new JsonObject();
+        inputJson.addProperty("name", "new_guideName");
+        inputJson.addProperty("gender", "new_guideGender");
+        inputJson.addProperty("birthYear", "2010");
+        inputJson.addProperty("image", "");
+        login(StartDataSet.admin.getUserName(),"testAdmin");
+        given()
+                .contentType("application/json")
+                .header("x-access-token", securityToken)
+                .body(inputJson.toString())
+                .when().post("/exam/newguide")
+                .then()
+                .body("image", equalTo("https://i.stack.imgur.com/l60Hf.png"));
+    }
+
+    @Test
+    public void testCreateNewGuide_CheckForCustomImg() {
+        JsonObject inputJson = new JsonObject();
+        String customImageUrl = "https://st.depositphotos.com/2101611/3925/v/600/depositphotos_39258143-stock-illustration-businessman-avatar-profile-picture.jpg";
+        inputJson.addProperty("name", "new_guideName");
+        inputJson.addProperty("gender", "new_guideGender");
+        inputJson.addProperty("birthYear", "2010");
+        inputJson.addProperty("image", customImageUrl);
+        login(StartDataSet.admin.getUserName(),"testAdmin");
+        given()
+                .contentType("application/json")
+                .header("x-access-token", securityToken)
+                .body(inputJson.toString())
+                .when().post("/exam/newguide")
+                .then()
+                .body("image", equalTo(customImageUrl));
+    }
+
 
 
 

@@ -20,6 +20,7 @@ public class StartDataSet {
     public static Guide guide1,guide2,guide3;
     public static List<Trip> trips;
     public static List<User> users;
+    public static List<Guide> guides;
 
     public static void main(String[] args) throws Exception {
 
@@ -33,6 +34,7 @@ public class StartDataSet {
         EntityManager em = _emf.createEntityManager();
         trips = new ArrayList<>();
         users = new ArrayList<>();
+        guides = new ArrayList<>();
         try {
             em.getTransaction().begin();
             em.createNamedQuery("PackingItem.deleteAllRows").executeUpdate();
@@ -88,6 +90,9 @@ public class StartDataSet {
             guide1 = new Guide("guide 1","male",1,"https://i.stack.imgur.com/l60Hf.png");
             guide2 = new Guide("guide 2","male",2,"https://i.stack.imgur.com/l60Hf.png");
             guide3 = new Guide("guide 3","male",3,"https://i.stack.imgur.com/l60Hf.png");
+            guides.add(guide1);
+            guides.add(guide2);
+            guides.add(guide3);
 
             user.addRole(userRole);
             admin.addRole(adminRole);

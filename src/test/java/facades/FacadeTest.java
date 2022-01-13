@@ -5,7 +5,9 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import dtos.AddTripDTO;
+import dtos.GuideDTO;
 import dtos.user.UserDTO;
+import entities.Guide;
 import entities.Trip;
 import entities.User;
 import errorhandling.API_Exception;
@@ -178,6 +180,21 @@ public class FacadeTest {
             facade.addTrip(addTripDTO);
         });
         assertEquals("Error while creating trip, check dateTime format!", error.getMessage());
+    }
+
+
+    @Test
+    public void testCreateNewGuide_CheckForGuideID() throws Exception {
+        Gson gson = new GsonBuilder().setPrettyPrinting().create();
+        JsonObject inputJson = new JsonObject();
+        inputJson.addProperty("name", "new_guideName");
+        inputJson.addProperty("gender", "new_guideGender");
+        inputJson.addProperty("birthYear", "2010");
+        inputJson.addProperty("image", "");
+
+        GuideDTO guideDTO = gson.fromJson(inputJson.toString(),GuideDTO.class);
+        Guide guide = facade.addGuide(guideDTO);
+        assertNotNull(guide.getId());
     }
 
 
