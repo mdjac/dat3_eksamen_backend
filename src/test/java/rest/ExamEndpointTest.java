@@ -169,6 +169,32 @@ public class ExamEndpointTest {
                 .body("message", equalTo("User is already added to the trip!"));
     }
 
+    @Test
+    public void testDeleteTrip_CheckForSuccessfullResponse() {
+        int idToDelete = StartDataSet.trip1.getId();
+        login(StartDataSet.admin.getUserName(),"testAdmin");
+        given()
+                .contentType("application/json")
+                .header("x-access-token", securityToken)
+                .when().delete("/exam/trips/"+idToDelete)
+                .then()
+                .body("message", equalTo("Deleted trip with ID: "+idToDelete));
+    }
+
+    @Test
+    public void testDeleteTrip_CheckThatOnlyAdminCanDelete() {
+        int idToDelete = StartDataSet.trip1.getId();
+        login(StartDataSet.user.getUserName(),"testUser");
+        given()
+                .contentType("application/json")
+                .header("x-access-token", securityToken)
+                .when().delete("/exam/trips/"+idToDelete)
+                .then()
+                .body("message", equalTo("You are not authorized to perform the requested operation"));
+    }
+
+
+
 
 
 

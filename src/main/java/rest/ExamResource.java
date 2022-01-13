@@ -89,4 +89,18 @@ public class ExamResource {
         outputJson.addProperty("message","Added!");
         return Response.ok().entity(gson.toJson(outputJson)).build();
     }
+
+    @DELETE
+    @Produces(MediaType.APPLICATION_JSON)
+    @Path("trips/{id}")
+    @RolesAllowed("admin")
+    public Response deleteTrip(@PathParam("id") int id) throws API_Exception {
+
+        int deletedId = facade.deleteTrip(id);
+
+        JsonObject outputJson = new JsonObject();
+        outputJson.addProperty("message","Deleted trip with ID: "+ deletedId);
+
+        return Response.ok().entity(gson.toJson(outputJson)).build();
+    }
 }
