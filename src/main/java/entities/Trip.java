@@ -4,6 +4,7 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @Entity
 @Table(name = "trip")
@@ -29,7 +30,7 @@ public class Trip implements Serializable {
     @Column(name = "duration")
     private int duration;
 
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany()
     @JoinTable( // This is now the owner side of the relationsship
             name = "users_trips",
             joinColumns = @JoinColumn(name = "trip_id"),
@@ -135,5 +136,18 @@ public class Trip implements Serializable {
 
     public void setPackingItemList(List<PackingItem> packingItemList) {
         this.packingItemList = packingItemList;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Trip)) return false;
+        Trip trip = (Trip) o;
+        return Objects.equals(id, trip.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
     }
 }

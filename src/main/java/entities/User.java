@@ -98,4 +98,11 @@ public class User implements Serializable {
         trip.addUser(this);
       }
     }
+    public void removeTrip(Trip trip){
+      for(int i = 0; i < this.trips.size(); i ++){
+        if(this.trips.get(i).getId() == trip.getId()){
+          this.trips.remove(i);
+        }
+      }
+    }
 }

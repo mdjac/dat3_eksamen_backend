@@ -96,6 +96,7 @@ public class StartDataSet {
             trip1.addPackingItemList(pI7);
 
             user.addTrip(trip1);
+            //user.addTrip(trip2);
             trip2.addUser(user);
             admin.addTrip(trip3);
             trip4.addUser(both);

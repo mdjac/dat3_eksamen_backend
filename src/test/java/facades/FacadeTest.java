@@ -119,6 +119,28 @@ public class FacadeTest {
         assertEquals("User is already added to the trip!", error.getMessage());
     }
 
+    @Test
+    public void testDeleteTrip() throws API_Exception {
+        int deleteId = StartDataSet.trip1.getId();
+        facade.deleteTrip(deleteId);
+        EntityManager em = emf.createEntityManager();
+        Trip deletedTrip = em.find(Trip.class,StartDataSet.trip1.getId());
+        Assertions.assertNull(deletedTrip);
+    }
+
+    @Test
+    public void testDeleteTrip_UserOnlyGetTheSpecificTripDeleted() throws API_Exception {
+        int expected = StartDataSet.user.getTrips().size()-1;
+        int deleteId = StartDataSet.trip1.getId();
+        facade.deleteTrip(deleteId);
+        EntityManager em = emf.createEntityManager();
+        User user = em.find(User.class,StartDataSet.user.getUserName());
+        int actual = user.getTrips().size();
+        assertEquals(expected,actual);
+    }
+
+
+
 
 
 }

@@ -91,4 +91,31 @@ public class ExamFacade {
             em.close();
         }
     }
+
+    public int deleteTrip(int id) throws API_Exception{
+        EntityManager em = emf.createEntityManager();
+        Trip t = em.find(Trip.class, id);
+        try {
+            em.getTransaction().begin();
+
+            if (t == null) {
+                throw new API_Exception("Could not find trip with id: " + id);
+            }
+
+            t.getUsers().forEach(user -> {
+                user.removeTrip(t);
+            });
+
+            t.getPackingItemList().forEach(item -> {
+                em.remove(item);
+            });
+            em.remove(t);
+            em.getTransaction().commit();
+            return id;
+        } finally {
+            em.close();
+        }
+    }
+
+
 }
