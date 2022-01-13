@@ -7,6 +7,7 @@ import com.google.gson.JsonObject;
 import dtos.user.UserDTO;
 import entities.Trip;
 import entities.User;
+import errorhandling.API_Exception;
 import groovyjarjarantlr4.v4.runtime.atn.StarLoopEntryState;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
@@ -95,6 +96,29 @@ public class FacadeTest {
         List<Trip> fetchedTrips = facade.getAllTrips();
         assertEquals(fetchedTrips.size(),StartDataSet.trips.size());
     }
+
+    @Test
+    public void testAddUserToTrip_newTrip() throws Exception {
+        int expected = StartDataSet.trip3.getUsers().size()+1;
+        String username = StartDataSet.user.getUserName();
+        int tripid = StartDataSet.trip3.getId();
+        facade.addUserToTrip(tripid,username);
+        EntityManager em = emf.createEntityManager();
+        Trip trip = em.find(Trip.class, tripid);
+        int actual = trip.getUsers().size();
+        assertEquals(expected,actual);
+    }
+
+    @Test
+    public void testAddUserToTrip_alreadyAddedToTrip() {
+        int tripid = StartDataSet.trip1.getId();
+        String username = StartDataSet.user.getUserName();
+        API_Exception error = Assertions.assertThrows(API_Exception.class, () -> {
+            facade.addUserToTrip(tripid,username);
+        });
+        assertEquals("User is already added to the trip!", error.getMessage());
+    }
+
 
 
 }

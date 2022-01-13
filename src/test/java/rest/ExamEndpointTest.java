@@ -141,6 +141,34 @@ public class ExamEndpointTest {
                 .body("$", hasSize(StartDataSet.trips.size()));
     }
 
+    @Test
+    public void testAddUserToTrip() {
+        JsonObject jsonBody = new JsonObject();
+        jsonBody.addProperty("tripId", StartDataSet.trip3.getId());
+        login(StartDataSet.user.getUserName(),"testUser");
+        given()
+                .contentType("application/json")
+                .header("x-access-token", securityToken)
+                .body(jsonBody.toString())
+                .when().post("/exam/trips")
+                .then()
+                .body("message", equalTo("Added!"));
+    }
+
+    @Test
+    public void testAddUserToTrip_AlreadyAddedToTrip() {
+        JsonObject jsonBody = new JsonObject();
+        jsonBody.addProperty("tripId", StartDataSet.trip1.getId());
+        login(StartDataSet.user.getUserName(),"testUser");
+        given()
+                .contentType("application/json")
+                .header("x-access-token", securityToken)
+                .body(jsonBody.toString())
+                .when().post("/exam/trips")
+                .then()
+                .body("message", equalTo("User is already added to the trip!"));
+    }
+
 
 
 

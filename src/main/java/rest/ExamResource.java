@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
 
+import com.google.gson.JsonParser;
 import dtos.TripDTO;
 import entities.Trip;
 import errorhandling.API_Exception;
@@ -69,4 +70,23 @@ public class ExamResource {
     }
 
 
+    @POST
+    @Consumes({MediaType.APPLICATION_JSON})
+    @Produces({MediaType.APPLICATION_JSON})
+    @RolesAllowed({"user","admin"})
+    @Path("trips")
+    public Response addUserToTrip(String jsonString) throws API_Exception {
+        //Læg input JSON i json Object
+        JsonObject jsonObject = gson.fromJson(jsonString, JsonObject.class);
+        //Hent username ud fra token
+        String username = securityContext.getUserPrincipal().getName();
+        int tripId = jsonObject.get("tripId").getAsInt();
+
+        //Kald facade som tilføje brugeren
+        facade.addUserToTrip(tripId,username);
+
+        JsonObject outputJson = new JsonObject();
+        outputJson.addProperty("message","Added!");
+        return Response.ok().entity(gson.toJson(outputJson)).build();
+    }
 }

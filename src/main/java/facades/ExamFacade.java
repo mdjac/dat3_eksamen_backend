@@ -69,6 +69,26 @@ public class ExamFacade {
         } finally{
             em.close();
         }
+    }
 
+    public void addUserToTrip(int tripId, String username) throws API_Exception {
+        EntityManager em = emf.createEntityManager();
+        try {
+            em.getTransaction().begin();
+            User user = em.find(User.class,username);
+            Trip trip = em.find(Trip.class,tripId);
+            if(user == null || trip == null){
+                throw new API_Exception("Trip or User doesn't exist in database");
+            }
+            if(trip.getUsers().contains(user)){
+                throw new API_Exception("User is already added to the trip!");
+            }
+            user.addTrip(trip);
+            em.getTransaction().commit();
+        } catch(Exception e){
+            throw new API_Exception(e.getMessage());
+        } finally {
+            em.close();
+        }
     }
 }
