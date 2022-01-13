@@ -4,8 +4,11 @@ import entities.*;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class StartDataSet {
@@ -18,7 +21,7 @@ public class StartDataSet {
     public static List<Trip> trips;
     public static List<User> users;
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception {
 
         EntityManagerFactory emf = EMF_Creator.createEntityManagerFactory();
         setupInitialData(emf);
@@ -26,7 +29,7 @@ public class StartDataSet {
 
     //Entity managerFactory is deciding whether the data is to test or prod database.
     //Is called both from rest and test cases
-    public static void setupInitialData(EntityManagerFactory _emf){
+    public static void setupInitialData(EntityManagerFactory _emf) throws Exception {
         EntityManager em = _emf.createEntityManager();
         trips = new ArrayList<>();
         users = new ArrayList<>();
@@ -55,12 +58,17 @@ public class StartDataSet {
             userRole = new Role("user");
             adminRole = new Role("admin");
 
-            trip1 = new Trip("trip1","testTime","testLocation",1);
-            trip2 = new Trip("trip2","testTime","testLocation",2);
-            trip3 = new Trip("trip3","testTime","testLocation",3);
-            trip4 = new Trip("trip4","testTime","testLocation",4);
-            trip5 = new Trip("trip5","testTime","testLocation",5);
-            trip6 = new Trip("trip6","testTime","testLocation",6);
+
+            String date_time = "13-01-2022 05:35";
+            Date date = Utility.stringToDateFormatter(date_time);
+
+
+            trip1 = new Trip("trip1",date,"testLocation",1);
+            trip2 = new Trip("trip2",date,"testLocation",2);
+            trip3 = new Trip("trip3",date,"testLocation",3);
+            trip4 = new Trip("trip4",date,"testLocation",4);
+            trip5 = new Trip("trip5",date,"testLocation",5);
+            trip6 = new Trip("trip6",date,"testLocation",6);
             trips.add(trip1);
             trips.add(trip2);
             trips.add(trip3);
@@ -143,5 +151,7 @@ public class StartDataSet {
         } finally {
             em.close();
         }
+
+
     }
 }

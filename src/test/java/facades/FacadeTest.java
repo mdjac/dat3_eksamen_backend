@@ -47,7 +47,7 @@ public class FacadeTest {
 
     // Setup the DataBase in a known state BEFORE EACH TEST
     @BeforeEach
-    public void setUp() {
+    public void setUp() throws Exception {
         StartDataSet.setupInitialData(emf);
     }
 

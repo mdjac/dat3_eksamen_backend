@@ -76,7 +76,7 @@ public class ExamEndpointTest {
     // Setup the DataBase (used by the test-server and this test) in a known state BEFORE EACH TEST
 
     @BeforeEach
-    public void setUp() {
+    public void setUp() throws Exception {
         StartDataSet.setupInitialData(emf);
     }
 

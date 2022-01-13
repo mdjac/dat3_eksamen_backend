@@ -20,7 +20,7 @@ public class TripDTO {
             this.id = trip.getId();
         }
         this.name = trip.getName();
-        this.dateTime = trip.getDateTime();
+        this.dateTime = trip.getDateTime().toString();
         this.location = trip.getLocation();
         this.duration = trip.getDuration();
         trip.getPackingItemList().forEach(packingItem -> this.packingItems.add(new PackingItemDTO(packingItem)));

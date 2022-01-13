@@ -3,6 +3,7 @@ package entities;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
@@ -21,8 +22,9 @@ public class Trip implements Serializable {
     @Column(name = "name")
     private String name;
 
+    @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "dateTime")
-    private String dateTime;
+    private Date dateTime;
 
     @Column(name = "location")
     private String location;
@@ -47,7 +49,7 @@ public class Trip implements Serializable {
     public Trip() {
     }
 
-    public Trip(String name, String dateTime, String location, int duration) {
+    public Trip(String name, Date dateTime, String location, int duration) {
         this.name = name;
         this.dateTime = dateTime;
         this.location = location;
@@ -106,11 +108,11 @@ public class Trip implements Serializable {
         this.name = name;
     }
 
-    public String getDateTime() {
+    public Date getDateTime() {
         return dateTime;
     }
 
-    public void setDateTime(String dateTime) {
+    public void setDateTime(Date dateTime) {
         this.dateTime = dateTime;
     }
 

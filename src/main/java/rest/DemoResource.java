@@ -157,7 +157,7 @@ public class DemoResource {
 
     @GET
     @Path("reset")
-    public String resetDataSet() {
+    public String resetDataSet() throws Exception {
         StartDataSet setup = new StartDataSet();
         String[] arguments = new String[] {""};
         setup.main(arguments);

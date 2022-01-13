@@ -5,16 +5,17 @@
  */
 package utils;
 
-import java.util.Properties;
-import java.util.Set;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.*;
+
 import com.google.gson.*;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.Map;
-import java.util.Scanner;
+
 import utils.api.MakeOptions;
 
 public class Utility {
@@ -32,6 +33,17 @@ public class Utility {
         String res = new Scanner(con.getInputStream()).useDelimiter("\\Z").next();
         
         return res;
+    }
+
+    public static Date stringToDateFormatter (String input) throws Exception {
+            try {
+                SimpleDateFormat dateParser = new SimpleDateFormat("dd-mm-yy HH:mm");
+                Date date = dateParser.parse(input);
+                return date;
+
+            } catch (ParseException e) {
+                throw new Exception ("Error while formatting date!");
+            }
     }
 
 }
