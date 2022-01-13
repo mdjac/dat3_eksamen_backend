@@ -7,10 +7,10 @@ import javax.persistence.EntityManagerFactory;
 
 public class StartDataSet {
 
-    public static User user,admin,both;
+    public static User user,admin,both,newUser;
     public static Role userRole,adminRole;
-    public static Trip trip1,trip2,trip3,trip4;
-    public static PackingItem pI1,pI2,pI3,pI4;
+    public static Trip trip1,trip2,trip3,trip4,trip5,trip6;
+    public static PackingItem pI1,pI2,pI3,pI4,pI5,pI6;
     public static Guide guide1,guide2,guide3;
 
     public static void main(String[] args) {
@@ -36,6 +36,7 @@ public class StartDataSet {
             user = new User("user", "testUser");
             admin = new User("admin", "testAdmin");
             both = new User("user_admin", "testBoth");
+            newUser = new User("new_user", "testNew");
 
             userRole = new Role("user");
             adminRole = new Role("admin");
@@ -44,12 +45,16 @@ public class StartDataSet {
             trip2 = new Trip("testname","testTime","testLocation",2);
             trip3 = new Trip("testname","testTime","testLocation",3);
             trip4 = new Trip("testname","testTime","testLocation",4);
+            trip5 = new Trip("testname","testTime","testLocation",5);
+            trip6 = new Trip("testname","testTime","testLocation",6);
 
 
             pI1 = new PackingItem("Name1");
             pI2 = new PackingItem("Name2");
             pI3 = new PackingItem("Name3");
             pI4 = new PackingItem("Name4");
+            pI5 = new PackingItem("Name5");
+            pI6 = new PackingItem("Name6");
 
             guide1 = new Guide("name","male",1,"profile","image");
             guide2 = new Guide("name","male",2,"profile","image");
@@ -59,11 +64,14 @@ public class StartDataSet {
             admin.addRole(adminRole);
             both.addRole(userRole);
             both.addRole(adminRole);
+            newUser.addRole(userRole);
 
             trip1.addPackingItemList(pI1);
             trip2.addPackingItemList(pI2);
             trip3.addPackingItemList(pI3);
             trip4.addPackingItemList(pI4);
+            trip5.addPackingItemList(pI5);
+            trip6.addPackingItemList(pI6);
 
             user.addTrip(trip1);
             trip2.addUser(user);
@@ -74,6 +82,8 @@ public class StartDataSet {
             guide2.addTrip(trip2);
             guide3.addTrip(trip3);
             guide3.addTrip(trip4);
+            guide1.addTrip(trip5);
+            guide1.addTrip(trip6);
 
             em.persist(userRole);
             em.persist(adminRole);
@@ -86,15 +96,20 @@ public class StartDataSet {
             em.persist(pI2);
             em.persist(pI3);
             em.persist(pI4);
+            em.persist(pI5);
+            em.persist(pI6);
 
             em.persist(trip1);
             em.persist(trip2);
             em.persist(trip3);
             em.persist(trip4);
+            em.persist(trip5);
+            em.persist(trip6);
 
             em.persist(user);
             em.persist(admin);
             em.persist(both);
+            em.persist(newUser);
 
 
 
