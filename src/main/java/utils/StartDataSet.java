@@ -55,12 +55,12 @@ public class StartDataSet {
             userRole = new Role("user");
             adminRole = new Role("admin");
 
-            trip1 = new Trip("testname","testTime","testLocation",1);
-            trip2 = new Trip("testname","testTime","testLocation",2);
-            trip3 = new Trip("testname","testTime","testLocation",3);
-            trip4 = new Trip("testname","testTime","testLocation",4);
-            trip5 = new Trip("testname","testTime","testLocation",5);
-            trip6 = new Trip("testname","testTime","testLocation",6);
+            trip1 = new Trip("trip1","testTime","testLocation",1);
+            trip2 = new Trip("trip2","testTime","testLocation",2);
+            trip3 = new Trip("trip3","testTime","testLocation",3);
+            trip4 = new Trip("trip4","testTime","testLocation",4);
+            trip5 = new Trip("trip5","testTime","testLocation",5);
+            trip6 = new Trip("trip6","testTime","testLocation",6);
             trips.add(trip1);
             trips.add(trip2);
             trips.add(trip3);
@@ -77,9 +77,9 @@ public class StartDataSet {
             pI6 = new PackingItem("Name6");
             pI7 = new PackingItem("Name7");
 
-            guide1 = new Guide("name","male",1,"profile","image");
-            guide2 = new Guide("name","male",2,"profile","image");
-            guide3 = new Guide("name","male",3,"profile","image");
+            guide1 = new Guide("guide 1","male",1,"profile","https://i.stack.imgur.com/l60Hf.png");
+            guide2 = new Guide("guide 2","male",2,"profile","https://i.stack.imgur.com/l60Hf.png");
+            guide3 = new Guide("guide 3","male",3,"profile","https://i.stack.imgur.com/l60Hf.png");
 
             user.addRole(userRole);
             admin.addRole(adminRole);
