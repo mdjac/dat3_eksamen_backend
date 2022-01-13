@@ -193,6 +193,48 @@ public class ExamEndpointTest {
                 .body("message", equalTo("You are not authorized to perform the requested operation"));
     }
 
+    @Test
+    public void testCreateNewTrip_wrongDateFormat() {
+        JsonObject inputJson = new JsonObject();
+        inputJson.addProperty("name", "new_trip");
+        inputJson.addProperty("dateTime", "FORKERT TIME FORMAT!");
+        inputJson.addProperty("duration", "2");
+        inputJson.addProperty("location", "Det hemmelige sted");
+        JsonArray jsonArray = new JsonArray();
+        jsonArray.add("Madpakke");
+        jsonArray.add("Sovepose");
+        inputJson.add("packingItems", jsonArray);
+        login(StartDataSet.admin.getUserName(),"testAdmin");
+        given()
+                .contentType("application/json")
+                .header("x-access-token", securityToken)
+                .body(inputJson.toString())
+                .when().post("/exam/newtrip/")
+                .then()
+                .body("message", equalTo("Error while creating trip, check dateTime format!"));
+    }
+
+    @Test
+    public void testCreateNewTrip_CheckForTripID() {
+        JsonObject inputJson = new JsonObject();
+        inputJson.addProperty("name", "new_trip");
+        inputJson.addProperty("dateTime", "01-01-2023 10:00");
+        inputJson.addProperty("duration", "2");
+        inputJson.addProperty("location", "Det hemmelige sted");
+        JsonArray jsonArray = new JsonArray();
+        jsonArray.add("Madpakke");
+        jsonArray.add("Sovepose");
+        inputJson.add("packingItems", jsonArray);
+        login(StartDataSet.admin.getUserName(),"testAdmin");
+        given()
+                .contentType("application/json")
+                .header("x-access-token", securityToken)
+                .body(inputJson.toString())
+                .when().post("/exam/newtrip/")
+                .then()
+                .body("id", greaterThan(0));
+    }
+
 
 
 

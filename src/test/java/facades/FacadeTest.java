@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
+import dtos.AddTripDTO;
 import dtos.user.UserDTO;
 import entities.Trip;
 import entities.User;
@@ -23,6 +24,7 @@ import javax.persistence.EntityManagerFactory;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 public class FacadeTest {
 
@@ -138,6 +140,49 @@ public class FacadeTest {
         int actual = user.getTrips().size();
         assertEquals(expected,actual);
     }
+
+
+    @Test
+    public void testCreateNewTrip_CheckForTripID() throws Exception {
+        Gson gson = new GsonBuilder().setPrettyPrinting().create();
+        JsonObject inputJson = new JsonObject();
+        inputJson.addProperty("name", "new_trip");
+        inputJson.addProperty("dateTime", "01-01-2023 10:00");
+        inputJson.addProperty("duration", "2");
+        inputJson.addProperty("location", "Det hemmelige sted");
+        JsonArray jsonArray = new JsonArray();
+        jsonArray.add("Madpakke");
+        jsonArray.add("Sovepose");
+        inputJson.add("packingItems", jsonArray);
+
+        AddTripDTO addTripDTO = gson.fromJson(inputJson.toString(),AddTripDTO.class);
+        Trip trip = facade.addTrip(addTripDTO);
+        assertNotNull(trip.getId());
+    }
+
+    @Test
+    public void testCreateNewTrip_wrongDateFormat() throws API_Exception {
+        Gson gson = new GsonBuilder().setPrettyPrinting().create();
+        JsonObject inputJson = new JsonObject();
+        inputJson.addProperty("name", "new_trip");
+        inputJson.addProperty("dateTime", "FORKERT TIME FORMAT!");
+        inputJson.addProperty("duration", "2");
+        inputJson.addProperty("location", "Det hemmelige sted");
+        JsonArray jsonArray = new JsonArray();
+        jsonArray.add("Madpakke");
+        jsonArray.add("Sovepose");
+        inputJson.add("packingItems", jsonArray);
+        AddTripDTO addTripDTO = gson.fromJson(inputJson.toString(),AddTripDTO.class);
+
+        API_Exception error = Assertions.assertThrows(API_Exception.class, () -> {
+            facade.addTrip(addTripDTO);
+        });
+        assertEquals("Error while creating trip, check dateTime format!", error.getMessage());
+    }
+
+
+
+
 
 
 

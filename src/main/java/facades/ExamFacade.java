@@ -5,6 +5,9 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import dtos.AddTripDTO;
+import dtos.TripDTO;
+import entities.PackingItem;
 import entities.Trip;
 import entities.User;
 import errorhandling.API_Exception;
@@ -116,6 +119,26 @@ public class ExamFacade {
             em.close();
         }
     }
+
+    public Trip addTrip(AddTripDTO inputDTO) throws Exception {
+        EntityManager em = emf.createEntityManager();
+        Trip trip = inputDTO.getTripEntity();
+        try {
+            em.getTransaction().begin();
+            trip.getPackingItemList().forEach(pi ->{
+                em.persist(pi);
+            });
+            em.persist(trip);
+            em.getTransaction().commit();
+            return trip;
+        } catch(Exception e){
+            throw new API_Exception(e.getMessage());
+        } finally {
+            em.close();
+        }
+    }
+
+
 
 
 }

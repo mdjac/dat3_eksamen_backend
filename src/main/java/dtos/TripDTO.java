@@ -1,13 +1,14 @@
 package dtos;
 
 import entities.Trip;
+import utils.Utility;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
 public class TripDTO {
-    private int id;
+    private Integer id;
     private String name;
     private String dateTime;
     private String location;
@@ -36,6 +37,7 @@ public class TripDTO {
         });
         return tripDTOS;
     }
+
 
     @Override
     public boolean equals(Object o) {

@@ -3,7 +3,7 @@ package dtos;
 import entities.PackingItem;
 
 public class PackingItemDTO {
-    private int id;
+    private Integer id;
     private String name;
 
     public PackingItemDTO(PackingItem packingItem) {

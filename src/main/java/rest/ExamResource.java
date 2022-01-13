@@ -5,7 +5,9 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
 
 import com.google.gson.JsonParser;
+import dtos.AddTripDTO;
 import dtos.TripDTO;
+import dtos.user.UserDTO;
 import entities.Trip;
 import errorhandling.API_Exception;
 
@@ -102,5 +104,17 @@ public class ExamResource {
         outputJson.addProperty("message","Deleted trip with ID: "+ deletedId);
 
         return Response.ok().entity(gson.toJson(outputJson)).build();
+    }
+
+    @POST
+    @Consumes({MediaType.APPLICATION_JSON})
+    @Produces({MediaType.APPLICATION_JSON})
+    @Path("newtrip")
+    @RolesAllowed("admin")
+    public Response addTrip(String jsonString) throws Exception {
+        AddTripDTO addTripDTO = gson.fromJson(jsonString, AddTripDTO.class);
+        Trip trip = facade.addTrip(addTripDTO);
+        TripDTO tripDTO = new TripDTO(trip);
+        return Response.ok().entity(gson.toJson(tripDTO)).build();
     }
 }
