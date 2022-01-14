@@ -197,6 +197,13 @@ public class FacadeTest {
         assertNotNull(guide.getId());
     }
 
+    @Test
+    public void testFindTripByID() throws Exception {
+        int id = StartDataSet.trip1.getId();
+        Trip trip = facade.getTripById(id);
+        assertNotNull(trip.getId());
+    }
+
 
 
 

@@ -155,6 +155,21 @@ public class ExamFacade {
         }
     }
 
+    public Trip getTripById(int id) throws API_Exception {
+        EntityManager em = emf.createEntityManager();
+        try{
+            Trip trip = em.find(Trip.class,id);
+            if(trip == null){
+                throw new API_Exception("Trip with id: "+id+" not found!");
+            }
+            return trip;
+        } catch (Exception e){
+            throw new API_Exception("Error while fetching trip!");
+        } finally{
+            em.close();
+        }
+    }
+
 
 
 

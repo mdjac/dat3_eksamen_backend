@@ -287,6 +287,18 @@ public class ExamEndpointTest {
                 .body("image", equalTo(customImageUrl));
     }
 
+    @Test
+    public void testGetTripById_checkCorrectID() {
+        login(StartDataSet.admin.getUserName(), "testAdmin");
+        given()
+                .contentType("application/json")
+                .header("x-access-token", securityToken)
+                .when().get("/exam/trips/"+StartDataSet.trip1.getId())
+                .then()
+                .statusCode(200)
+                .body("id", is(StartDataSet.trip1.getId()));
+    }
+
 
 
 
