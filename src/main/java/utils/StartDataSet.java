@@ -65,12 +65,12 @@ public class StartDataSet {
             Date date = Utility.stringToDateFormatter(date_time);
 
 
-            trip1 = new Trip("trip1",date,"testLocation",1);
-            trip2 = new Trip("trip2",date,"testLocation",2);
-            trip3 = new Trip("trip3",date,"testLocation",3);
-            trip4 = new Trip("trip4",date,"testLocation",4);
-            trip5 = new Trip("trip5",date,"testLocation",5);
-            trip6 = new Trip("trip6",date,"testLocation",6);
+            trip1 = new Trip("USA",date,"Miami",1);
+            trip2 = new Trip("Denmark",date,"Copenhagen",2);
+            trip3 = new Trip("Denmark",date,"Roskilde",3);
+            trip4 = new Trip("USA",date,"LA",4);
+            trip5 = new Trip("USA",date,"Washington",5);
+            trip6 = new Trip("England",date,"London",6);
             trips.add(trip1);
             trips.add(trip2);
             trips.add(trip3);
@@ -79,17 +79,17 @@ public class StartDataSet {
             trips.add(trip6);
 
 
-            pI1 = new PackingItem("Name1");
-            pI2 = new PackingItem("Name2");
-            pI3 = new PackingItem("Name3");
-            pI4 = new PackingItem("Name4");
-            pI5 = new PackingItem("Name5");
-            pI6 = new PackingItem("Name6");
-            pI7 = new PackingItem("Name7");
+            pI1 = new PackingItem("Clothes");
+            pI2 = new PackingItem("Shoes");
+            pI3 = new PackingItem("Knifes");
+            pI4 = new PackingItem("Fork");
+            pI5 = new PackingItem("Hat");
+            pI6 = new PackingItem("Googles");
+            pI7 = new PackingItem("Gloves");
 
-            guide1 = new Guide("guide 1","male",1,"https://i.stack.imgur.com/l60Hf.png");
-            guide2 = new Guide("guide 2","male",2,"https://i.stack.imgur.com/l60Hf.png");
-            guide3 = new Guide("guide 3","male",3,"https://i.stack.imgur.com/l60Hf.png");
+            guide1 = new Guide("Jens","male",1995,"https://i.stack.imgur.com/l60Hf.png");
+            guide2 = new Guide("Adam","male",1990,"https://i.stack.imgur.com/l60Hf.png");
+            guide3 = new Guide("Niels","male",185,"https://i.stack.imgur.com/l60Hf.png");
             guides.add(guide1);
             guides.add(guide2);
             guides.add(guide3);
