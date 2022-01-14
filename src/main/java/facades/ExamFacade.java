@@ -8,6 +8,7 @@ import com.google.gson.JsonObject;
 import dtos.AddTripDTO;
 import dtos.GuideDTO;
 import dtos.TripDTO;
+import dtos.UpdateTripDTO;
 import entities.Guide;
 import entities.PackingItem;
 import entities.Trip;
@@ -173,15 +174,32 @@ public class ExamFacade {
     public List<Guide> getAllGuides() throws API_Exception {
         List<Guide> guides;
         EntityManager em = emf.createEntityManager();
-        try{
+        try {
             TypedQuery<Guide> query = em.createQuery("SELECT g from Guide g", Guide.class);
             guides = query.getResultList();
             return guides;
-        } catch (Exception e){
+        } catch (Exception e) {
             throw new API_Exception("Error while fetching guides!");
-        } finally{
+        } finally {
             em.close();
         }
+    }
+
+        public Trip updateGuideOnTrip(UpdateTripDTO updateTripDTO) throws API_Exception {
+            EntityManager em = emf.createEntityManager();
+            try{
+                em.getTransaction().begin();
+                Trip trip = em.find(Trip.class,updateTripDTO.getId());
+                Guide guide = em.find(Guide.class,Integer.parseInt(updateTripDTO.getGuideId()));
+                guide.addTrip(trip);
+                em.getTransaction().commit();
+                return trip;
+            } catch (Exception e){
+                throw new API_Exception("Error while updating trip");
+            } finally{
+                em.close();
+            }
+
     }
 
 

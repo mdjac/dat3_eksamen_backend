@@ -8,6 +8,7 @@ import com.google.gson.JsonParser;
 import dtos.AddTripDTO;
 import dtos.GuideDTO;
 import dtos.TripDTO;
+import dtos.UpdateTripDTO;
 import dtos.user.UserDTO;
 import entities.Guide;
 import entities.Trip;
@@ -18,16 +19,9 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.security.RolesAllowed;
 import javax.persistence.EntityManagerFactory;
-import javax.ws.rs.Consumes;
-import javax.ws.rs.DELETE;
-import javax.ws.rs.GET;
+import javax.ws.rs.*;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.UriInfo;
-import javax.ws.rs.Produces;
-import javax.ws.rs.POST;
-import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
-import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.SecurityContext;
@@ -153,5 +147,19 @@ public class ExamResource {
         List<Guide> guides = facade.getAllGuides();
         List<GuideDTO> guideDtos = GuideDTO.getGuideDTOs(guides);
         return Response.ok().entity(gson.toJson(guideDtos)).build();
+    }
+
+    @PUT
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Path("trips")
+    @RolesAllowed("admin")
+    public Response updateGuideOnTrip(String jsonString) throws API_Exception {
+        System.out.println("HIT");
+        System.out.println(jsonString);
+        UpdateTripDTO updateTripDTO = gson.fromJson(jsonString,UpdateTripDTO.class);
+        Trip trip = facade.updateGuideOnTrip(updateTripDTO);
+        TripDTO tripDTO = new TripDTO(trip);
+        return Response.ok().entity(gson.toJson(tripDTO)).build();
     }
 }

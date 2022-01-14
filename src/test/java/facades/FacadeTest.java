@@ -6,6 +6,7 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import dtos.AddTripDTO;
 import dtos.GuideDTO;
+import dtos.UpdateTripDTO;
 import dtos.user.UserDTO;
 import entities.Guide;
 import entities.Trip;
@@ -25,8 +26,7 @@ import javax.persistence.EntityManagerFactory;
 
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class FacadeTest {
 
@@ -209,6 +209,19 @@ public class FacadeTest {
     public void testGetAllGuides() throws Exception {
         List<Guide> fetchedGuides = facade.getAllGuides();
         assertEquals(fetchedGuides.size(),StartDataSet.guides.size());
+    }
+
+    @Test
+    public void testUpdateGuideOnTrip() throws Exception {
+        Gson gson = new GsonBuilder().setPrettyPrinting().create();
+        JsonObject inputJson = new JsonObject();
+        inputJson.addProperty("id", StartDataSet.trip1.getId());
+        inputJson.addProperty("guideId", StartDataSet.guide3.getId());
+        UpdateTripDTO updateTripDTO = gson.fromJson(inputJson,UpdateTripDTO.class);
+        int previousGuideId = StartDataSet.trip1.getGuide().getId();
+        Trip trip = facade.updateGuideOnTrip(updateTripDTO);
+        int newGuideId = trip.getGuide().getId();
+        assertNotEquals(previousGuideId,newGuideId);
     }
 
 
