@@ -300,7 +300,17 @@ public class ExamEndpointTest {
     }
 
 
-
+    @Test
+    public void testGetGuides_size() {
+        login(StartDataSet.admin.getUserName(), "testAdmin");
+        given()
+                .contentType("application/json")
+                .header("x-access-token", securityToken)
+                .when().get("/exam/guides")
+                .then()
+                .statusCode(200)
+                .body("$", hasSize(StartDataSet.guides.size()));
+    }
 
 
 

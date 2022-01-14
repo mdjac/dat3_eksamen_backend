@@ -1,6 +1,10 @@
 package dtos;
 
 import entities.Guide;
+import entities.Trip;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class GuideDTO {
     private Integer id;
@@ -27,6 +31,13 @@ public class GuideDTO {
         return guide;
     }
 
+    public static List<GuideDTO> getGuideDTOs (List<Guide> guides){
+        List<GuideDTO> guideDTOS = new ArrayList<>();
+        guides.forEach(g ->{
+            guideDTOS.add(new GuideDTO(g));
+        });
+        return guideDTOS;
+    }
     public String getImage() {
         return image;
     }

@@ -144,4 +144,14 @@ public class ExamResource {
         TripDTO tripDTO = new TripDTO(trip);
         return Response.ok().entity(gson.toJson(tripDTO)).build();
     }
+
+    @GET
+    @Produces({MediaType.APPLICATION_JSON})
+    @RolesAllowed("admin")
+    @Path("guides")
+    public Response getAllGuides() throws IOException, API_Exception {
+        List<Guide> guides = facade.getAllGuides();
+        List<GuideDTO> guideDtos = GuideDTO.getGuideDTOs(guides);
+        return Response.ok().entity(gson.toJson(guideDtos)).build();
+    }
 }

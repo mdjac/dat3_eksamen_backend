@@ -205,6 +205,13 @@ public class FacadeTest {
     }
 
 
+    @Test
+    public void testGetAllGuides() throws Exception {
+        List<Guide> fetchedGuides = facade.getAllGuides();
+        assertEquals(fetchedGuides.size(),StartDataSet.guides.size());
+    }
+
+
 
 
 

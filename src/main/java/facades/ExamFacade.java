@@ -170,6 +170,20 @@ public class ExamFacade {
         }
     }
 
+    public List<Guide> getAllGuides() throws API_Exception {
+        List<Guide> guides;
+        EntityManager em = emf.createEntityManager();
+        try{
+            TypedQuery<Guide> query = em.createQuery("SELECT g from Guide g", Guide.class);
+            guides = query.getResultList();
+            return guides;
+        } catch (Exception e){
+            throw new API_Exception("Error while fetching guides!");
+        } finally{
+            em.close();
+        }
+    }
+
 
 
 
